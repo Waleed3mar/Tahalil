@@ -3,23 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>إنشاء البلاغ الأسبوعي</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .container { background-color: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 700px; }
-        h1, h2 { color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; margin-bottom: 20px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .category { background-color: #f2f2f2; padding: 20px; border-radius: 8px; }
-        .input-group { margin-bottom: 15px; }
-        label { font-weight: bold; color: #555; display: block; margin-bottom: 5px; }
-        input { width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
-        button { background-color: #4CAF50; color: white; width: 100%; padding: 12px; border: none; cursor: pointer; font-size: 18px; border-radius: 5px; margin-top: 20px; transition: background-color 0.3s; }
-        button:hover { background-color: #45a049; }
-        #loader { display: none; text-align: center; padding: 20px; font-weight: bold; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>إدخال أعداد العينات المفحوصة (مصري)</h1>
+
+    <div class="container no-print">
+        <h1>إدخال أعداد العينات (مصري)</h1>
         <div class="grid">
             <div class="category">
                 <h2>بول (Urine)</h2>
@@ -61,15 +51,53 @@
                 </div>
             </div>
         </div>
-        
-        <button id="generateBtn" onclick="generatePDF()">توليد وتحميل التقرير (PDF)</button>
-        <div id="loader">جاري إنشاء الملف...</div>
+        <button onclick="prepareAndPrint()">تجهيز التقرير للطباعة (PDF)</button>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
-    
+    <div id="print-area">
+        <h2 class="report-title">البلاغ الأسبوعي للاصابة بالبهارسيا والفاشيولا</h2>
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th rowspan="4">الوحدة</th>
+                    <th colspan="8">عدد المفحوصين (مصري)</th>
+                    <th colspan="8">إيجابي بلهارسيا (مصري)</th>
+                </tr>
+                <tr>
+                    <th colspan="4">عدد المفحوص بول</th>
+                    <th colspan="4">عدد المفحوص براز</th>
+                    <th colspan="4">بلهارسيا بولية</th>
+                    <th colspan="4">بلهارسيا معوية</th>
+                </tr>
+                <tr>
+                    <th colspan="2">انثى</th>
+                    <th colspan="2">ذكر</th>
+                    <th colspan="2">انثى</th>
+                    <th colspan="2">ذكر</th>
+                    <th colspan="2">انثى</th>
+                    <th colspan="2">ذكر</th>
+                    <th colspan="2">انثى</th>
+                    <th colspan="2">ذكر</th>
+                </tr>
+                <tr>
+                    <th>&lt;=12</th><th>&gt;12</th><th>&lt;=12</th><th>&gt;12</th>
+                    <th>&lt;=12</th><th>&gt;12</th><th>&lt;=12</th><th>&gt;12</th>
+                    <th>&lt;=12</th><th>&gt;12</th><th>&lt;=12</th><th>&gt;12</th>
+                    <th>&lt;=12</th><th>&gt;12</th><th>&lt;=12</th><th>&gt;12</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>فوكة</td>
+                    <td id="report-B8">0</td><td id="report-C8">0</td><td id="report-D8">0</td><td id="report-E8">0</td>
+                    <td id="report-F8">0</td><td id="report-G8">0</td><td id="report-H8">0</td><td id="report-I8">0</td>
+                    <td>0</td><td>0</td><td>0</td><td>0</td>
+                    <td>0</td><td>0</td><td>0</td><td>0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
