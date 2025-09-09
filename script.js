@@ -1,7 +1,7 @@
 // This is a Base64 encoded TTF file for the Amiri font.
 // It is very long, which is normal. Make sure it is copied completely.
 const amiriFont =
-  'AAEAAAARAQAABAAQRFNJRwAAAAAAA...'; // This string is intentionally truncated here for display, but the one you copy from the live editor will be complete.
+  'AAEAAAARAQAABAAQRFNJRwAAAAAAA...'; // This string is intentionally truncated here for display, but ensure the full string is in your actual file.
 
 async function generatePDF() {
   const generateBtn = document.getElementById('generateBtn');
@@ -36,7 +36,8 @@ async function generatePDF() {
     // 3. Update the data in the worksheet (in memory only)
     for (const cellAddress in newData) {
       if (!worksheet[cellAddress]) worksheet[cellAddress] = { t: 'n' };
-      workslet[cellAddress].v = newData[cellAddress];
+      // THIS LINE IS NOW CORRECTED
+      worksheet[cellAddress].v = newData[cellAddress];
     }
 
     // 4. Create the PDF document
@@ -87,8 +88,14 @@ async function generatePDF() {
       },
       // This function ensures all text in the table is rendered correctly from right-to-left
       didParseCell: function (data) {
-          if (typeof data.cell.text[0] === 'string') {
-              data.cell.text[0] = data.cell.text[0].split('').reverse().join('');
+          // Process only body cells to avoid reversing numbers and symbols
+          if (data.section === 'body') {
+            if (typeof data.cell.text[0] === 'string') {
+              // You might not need to reverse numbers, so check if the content is a number
+              if (isNaN(data.cell.text[0])) {
+                  data.cell.text[0] = data.cell.text[0].split('').reverse().join('');
+              }
+            }
           }
       }
     });
