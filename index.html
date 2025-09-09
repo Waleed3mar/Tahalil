@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إنشاء البلاغ الأسبوعي</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background-color: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 700px; }
+        h1, h2 { color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .category { background-color: #f2f2f2; padding: 20px; border-radius: 8px; }
+        .input-group { margin-bottom: 15px; }
+        label { font-weight: bold; color: #555; display: block; margin-bottom: 5px; }
+        input { width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #4CAF50; color: white; width: 100%; padding: 12px; border: none; cursor: pointer; font-size: 18px; border-radius: 5px; margin-top: 20px; transition: background-color 0.3s; }
+        button:hover { background-color: #45a049; }
+        #loader { display: none; text-align: center; padding: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>إدخال أعداد العينات المفحوصة (مصري)</h1>
+        <div class="grid">
+            <div class="category">
+                <h2>بول (Urine)</h2>
+                <div class="input-group">
+                    <label>أنثى (أقل من 12 سنة)</label>
+                    <input type="number" id="B8" value="0">
+                </div>
+                <div class="input-group">
+                    <label>أنثى (أكبر من 12 سنة)</label>
+                    <input type="number" id="C8" value="0">
+                </div>
+                <div class="input-group">
+                    <label>ذكر (أقل من 12 سنة)</label>
+                    <input type="number" id="D8" value="0">
+                </div>
+                <div class="input-group">
+                    <label>ذكر (أكبر من 12 سنة)</label>
+                    <input type="number" id="E8" value="0">
+                </div>
+            </div>
+
+            <div class="category">
+                <h2>براز (Stool)</h2>
+                <div class="input-group">
+                    <label>أنثى (أقل من 12 سنة)</label>
+                    <input type="number" id="F8" value="0">
+                </div>
+                <div class="input-group">
+                    <label>أنثى (أكبر من 12 سنة)</label>
+                    <input type="number" id="G8" value="0">
+                </div>
+                <div class="input-group">
+                    <label>ذكر (أقل من 12 سنة)</label>
+                    <input type="number" id="H8" value="0">
+                </div>
+                <div class="input-group">
+                    <label>ذكر (أكبر من 12 سنة)</label>
+                    <input type="number" id="I8" value="0">
+                </div>
+            </div>
+        </div>
+        
+        <button id="generateBtn" onclick="generatePDF()">توليد وتحميل التقرير (PDF)</button>
+        <div id="loader">جاري إنشاء الملف...</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
