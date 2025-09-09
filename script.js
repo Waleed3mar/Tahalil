@@ -1,7 +1,7 @@
-// This is a Base64 encoded TTF file for the Amiri font.
-// It is very long, which is normal. Make sure it is copied completely.
+// This is the Base64 encoded Amiri font. It is very long, which is normal.
+// Please ensure this entire line is copied correctly without any modification.
 const amiriFont =
-  'AAEAAAARAQAABAAQRFNJRwAAAAAAA...'; // This string is intentionally truncated here for display, but ensure the full string is in your actual file.
+  'AAEAAAARAQAABAAQRFNJRwAAAAAAA...'; // IMPORTANT: This string is intentionally truncated for display. The full version is required for the code to work.
 
 async function generatePDF() {
   const generateBtn = document.getElementById('generateBtn');
@@ -11,17 +11,20 @@ async function generatePDF() {
   loader.style.display = 'block';
 
   try {
-    // 1. Read the Excel template file
+    // STEP 1: Fetch and Read the Excel File
+    console.log('Step 1: Attempting to fetch data.xlsx...');
     const response = await fetch('data.xlsx');
     if (!response.ok) {
-      throw new Error('Failed to load the Excel template file (data.xlsx). Make sure the file exists in your project.');
+      // This error will be shown if the file is not found (404 error)
+      throw new Error(`Failed to load data.xlsx. Status: ${response.status}. Please make sure the file name is exactly 'data.xlsx' and it is in the same directory as index.html.`);
     }
     const arrayBuffer = await response.arrayBuffer();
     const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
+    console.log('Step 1: Excel file loaded successfully.');
 
-    // 2. Get new numbers from the input fields
+    // STEP 2: Get New Values from Input Fields
     const newData = {
       B8: parseInt(document.getElementById('B8').value, 10) || 0,
       C8: parseInt(document.getElementById('C8').value, 10) || 0,
@@ -33,79 +36,54 @@ async function generatePDF() {
       I8: parseInt(document.getElementById('I8').value, 10) || 0,
     };
 
-    // 3. Update the data in the worksheet (in memory only)
+    // STEP 3: Update Worksheet Data in Memory
     for (const cellAddress in newData) {
       if (!worksheet[cellAddress]) worksheet[cellAddress] = { t: 'n' };
-      // THIS LINE IS NOW CORRECTED
       worksheet[cellAddress].v = newData[cellAddress];
     }
 
-    // 4. Create the PDF document
+    // STEP 4: Generate the PDF Document
+    console.log('Step 4: Creating PDF document...');
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'landscape' });
 
-    // Add the embedded font to the PDF document
+    // Add the embedded font to the PDF
     doc.addFileToVFS('Amiri-Regular.ttf', amiriFont);
     doc.addFont('Amiri-Regular.ttf', 'Amiri', 'normal');
     doc.setFont('Amiri');
 
-    // Convert sheet to an array for easier handling
     const jsonSheet = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
-
-    // Extract the main title and render it correctly
     const title = String(jsonSheet[0]?.[0] || 'البلاغ الأسبوعي');
-    doc.setFontSize(16);
-    // jsPDF requires manual text reversal for right-to-left languages
-    const reversedTitle = title.split('').reverse().join('');
-    doc.text(reversedTitle, doc.internal.pageSize.getWidth() / 2, 15, { align: 'center' });
-    
-    // Extract the updated data row
     const dataRow = jsonSheet[7].slice(1, 17);
 
-    // Create the table in the PDF
+    const reversedTitle = title.split('').reverse().join('');
+    doc.setFontSize(16);
+    doc.text(reversedTitle, doc.internal.pageSize.getWidth() / 2, 15, { align: 'center' });
+
     doc.autoTable({
       startY: 25,
       head: [
-        ['إيجابي بلهارسيا', 'عدد المفحوصين'].map(t => t.split('').reverse().join('')),
-        ['معوية', 'بولية', 'براز', 'بول'].map(t => t.split('').reverse().join('')),
-        ['ذكر', 'انثى', 'ذكر', 'انثى', 'ذكر', 'انثى', 'ذكر', 'انثى'],
-        ['>12', '≤12', '>12', '≤12', '>12', '≤12', '>12', '≤12', '>12', '≤12', '>12', '≤12', '>12', '≤12', '>12', '≤12']
+          [{ content: 'ايجابى بلهارسيا'.split('').reverse().join(''), colSpan: 8, styles: { halign: 'center' } }, { content: 'عدد المفحوصين'.split('').reverse().join(''), colSpan: 8, styles: { halign: 'center' } }],
+          [{ content: 'معوية'.split('').reverse().join(''), colSpan: 4, styles: { halign: 'center' } }, { content: 'بولية'.split('').reverse().join(''), colSpan: 4, styles: { halign: 'center' } }, { content: 'براز'.split('').reverse().join(''), colSpan: 4, styles: { halign: 'center' } }, { content: 'بول'.split('').reverse().join(''), colSpan: 4, styles: { halign: 'center' } }],
+          ['ذكر', 'انثى', 'ذكر', 'انثى', 'ذكر', 'انثى', 'ذكر', 'انثى'].map(t => t.split('').reverse().join('')),
+          ['>12', '<=12', '>12', '<=12', '>12', '<=12', '>12', '<=12', '>12', '<=12', '>12', '<=12', '>12', '<=12', '>12', '<=12']
       ],
       body: [dataRow],
       theme: 'grid',
-      styles: {
-        font: 'Amiri',
-        halign: 'center',
-        cellPadding: 2,
-        fontSize: 10,
-      },
-      headStyles: {
-        fillColor: [41, 128, 185],
-        textColor: 255,
-        font: 'Amiri',
-        fontSize: 10,
-        valign: 'middle',
-      },
-      // This function ensures all text in the table is rendered correctly from right-to-left
-      didParseCell: function (data) {
-          // Process only body cells to avoid reversing numbers and symbols
-          if (data.section === 'body') {
-            if (typeof data.cell.text[0] === 'string') {
-              // You might not need to reverse numbers, so check if the content is a number
-              if (isNaN(data.cell.text[0])) {
-                  data.cell.text[0] = data.cell.text[0].split('').reverse().join('');
-              }
-            }
-          }
-      }
+      styles: { font: 'Amiri', halign: 'center', cellPadding: 2, fontSize: 10, },
+      headStyles: { fillColor: [41, 128, 185], textColor: 255, font: 'Amiri', fontSize: 9, valign: 'middle' }
     });
-
-    // 5. Save and download the PDF file
+    
+    // STEP 5: Save the PDF
+    console.log('Step 5: Saving PDF...');
     const date = new Date().toISOString().slice(0, 10);
     doc.save(`Lab-Report-${date}.pdf`);
+
   } catch (error) {
-    console.error('An error occurred:', error);
-    alert('An error occurred while creating the file. Please check the console for details.');
+    // This new error handling is more robust.
+    console.error("A critical error occurred. Details below:");
+    console.error(error); // This will print the full error object, whatever it is.
+    alert("An error occurred: " + (error.message || "Unknown error. Check the console (F12) for more details."));
   } finally {
     generateBtn.style.display = 'block';
     loader.style.display = 'none';
