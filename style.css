@@ -72,42 +72,55 @@ button:hover {
     background-color: #218838;
 }
 
-/* Print Styles */
+/* ======================================= */
+/* Print Styles (تم التعديل هنا)      */
+/* ======================================= */
+
 #print-area {
     display: none; /* Hidden by default */
 }
 
 @media print {
-    /* Hide the input form when printing */
-    .no-print {
-        display: none !important;
+    /* تحديد حجم واتجاه الصفحة للطباعة */
+    @page {
+        size: A4 landscape; /* الصفحة بالعرض لتناسب الجدول */
+        margin: 20mm;
     }
 
-    /* Show and style the report for printing */
-    #print-area {
-        display: block;
-    }
-    
     body {
         padding: 0;
         margin: 0;
     }
 
+    /* إخفاء واجهة الإدخال عند الطباعة */
+    .no-print {
+        display: none !important;
+    }
+
+    /* إظهار وتوسيط منطقة التقرير */
+    #print-area {
+        display: block;
+        width: 100%;
+    }
+
     .report-title {
         text-align: center;
-        font-size: 18px;
-        margin-bottom: 20px;
+        font-size: 16px;
+        margin-bottom: 15px;
+        font-weight: bold;
     }
 
     .report-table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 12px;
+        font-size: 10px; /* تصغير الخط قليلاً ليناسب الصفحة */
     }
 
     .report-table th, .report-table td {
         border: 1px solid #000;
-        padding: 6px;
+        padding: 5px; /* تقليل الحشو لملائمة أفضل */
         text-align: center;
+        /* لضمان عدم التفاف النصوص الطويلة */
+        white-space: nowrap; 
     }
 }
