@@ -9,7 +9,15 @@
 <body>
 
     <div class="container no-print">
-        <h1>إدخال أعداد العينات (مصري)</h1>
+        <h1>إدخال بيانات البلاغ الأسبوعي</h1>
+
+        <div class="category" style="margin-bottom: 30px;">
+            <h2>تاريخ التقرير</h2>
+            <div class="input-group">
+                <label for="reportDate">الرجاء تحديد تاريخ انتهاء البلاغ (يوم السبت)</label>
+                <input type="date" id="reportDate" style="width: 95%; padding: 10px; font-size: 16px;">
+            </div>
+        </div>
         <div class="grid">
             <div class="category">
                 <h2>بول (Urine)</h2>
@@ -55,8 +63,7 @@
     </div>
 
     <div id="print-area">
-        <h2 class="report-title">البلاغ الأسبوعي للاصابة بالبهارسيا والفاشيولا</h2>
-        <table class="report-table">
+        <h2 class="report-title"></h2> <table class="report-table">
             <thead>
                 <tr>
                     <th rowspan="4">الوحدة</th>
