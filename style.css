@@ -3,6 +3,7 @@ body {
     background-color: #f4f7f6;
     margin: 0;
     padding: 20px;
+    direction: rtl; /* تطبيق الاتجاه من اليمين لليسار على الصفحة كلها */
 }
 
 .container {
@@ -73,7 +74,7 @@ button:hover {
 }
 
 /* ======================================= */
-/* Print Styles (تم التعديل هنا)      */
+/* Print Styles (تم التعديل باستخدام Flexbox) */
 /* ======================================= */
 
 #print-area {
@@ -83,7 +84,7 @@ button:hover {
 @media print {
     @page {
         size: A4 landscape;
-        margin: 20mm;
+        margin: 15mm; /* تقليل الهوامش قليلاً */
     }
 
     body {
@@ -95,23 +96,27 @@ button:hover {
         display: none !important;
     }
     
+    /* استخدام Flexbox لتوسيط المحتوى */
     #print-area {
-        display: block;
+        display: flex;
+        flex-direction: column; /* ترتيب العناصر (العنوان ثم الجدول) بشكل عمودي */
+        justify-content: center; /* توسيط أفقي */
+        align-items: center;    /* توسيط رأسي */
         width: 100%;
+        height: 100%;
     }
 
     .report-title {
         text-align: center;
-        font-size: 14px; /* تصغير حجم الخط قليلاً */
-        margin-bottom: 15px;
+        font-size: 14px;
         font-weight: bold;
-        /* ==== السطران الجديدان لحل المشكلة ==== */
-        max-width: 100%; /* منع العنوان من تجاوز عرض الصفحة */
-        word-wrap: break-word; /* السماح بالتفاف النص إذا كان طويلاً */
+        width: 100%; /* اجعل العنوان يأخذ العرض الكامل */
+        margin-bottom: 20px; /* مسافة بين العنوان والجدول */
     }
 
     .report-table {
         width: 100%;
+        max-width: 100%; /* ضمان عدم تجاوز الجدول لعرض الصفحة */
         border-collapse: collapse;
         font-size: 10px;
     }
