@@ -3,7 +3,7 @@ body {
     background-color: #f4f7f6;
     margin: 0;
     padding: 20px;
-    direction: rtl; /* تطبيق الاتجاه من اليمين لليسار على الصفحة كلها */
+    direction: rtl;
 }
 
 .container {
@@ -73,10 +73,6 @@ button:hover {
     background-color: #218838;
 }
 
-/* ======================================= */
-/* Print Styles (تم التعديل باستخدام Flexbox) */
-/* ======================================= */
-
 #print-area {
     display: none;
 }
@@ -84,7 +80,7 @@ button:hover {
 @media print {
     @page {
         size: A4 landscape;
-        margin: 15mm; /* تقليل الهوامش قليلاً */
+        margin: 15mm;
     }
 
     body {
@@ -96,12 +92,11 @@ button:hover {
         display: none !important;
     }
     
-    /* استخدام Flexbox لتوسيط المحتوى */
     #print-area {
         display: flex;
-        flex-direction: column; /* ترتيب العناصر (العنوان ثم الجدول) بشكل عمودي */
-        justify-content: center; /* توسيط أفقي */
-        align-items: center;    /* توسيط رأسي */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         height: 100%;
     }
@@ -110,13 +105,13 @@ button:hover {
         text-align: center;
         font-size: 14px;
         font-weight: bold;
-        width: 100%; /* اجعل العنوان يأخذ العرض الكامل */
-        margin-bottom: 20px; /* مسافة بين العنوان والجدول */
+        width: 100%;
+        margin-bottom: 20px;
     }
 
     .report-table {
         width: 100%;
-        max-width: 100%; /* ضمان عدم تجاوز الجدول لعرض الصفحة */
+        max-width: 100%;
         border-collapse: collapse;
         font-size: 10px;
     }
@@ -126,5 +121,18 @@ button:hover {
         padding: 5px;
         text-align: center;
         white-space: nowrap; 
+    }
+
+    .report-footer {
+        width: 100%;
+        display: flex;
+        justify-content: space-between; /* <-- التعديل هنا */
+        margin-top: 50px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    
+    .signature {
+        text-align: center;
     }
 }
