@@ -22,49 +22,25 @@
         <div class="grid">
             <div class="category">
                 <h2>بول (Urine)</h2>
-                <div class="input-group">
-                    <label>أنثى (أقل من 12 سنة)</label>
-                    <input type="number" id="B8" value="0">
-                </div>
-                <div class="input-group">
-                    <label>أنثى (أكبر من 12 سنة)</label>
-                    <input type="number" id="C8" value="0">
-                </div>
-                <div class="input-group">
-                    <label>ذكر (أقل من 12 سنة)</label>
-                    <input type="number" id="D8" value="0">
-                </div>
-                <div class="input-group">
-                    <label>ذكر (أكبر من 12 سنة)</label>
-                    <input type="number" id="E8" value="0">
-                </div>
+                <div class="input-group"><label>أنثى (أقل من 12 سنة)</label><input type="number" id="B8" value="0"></div>
+                <div class="input-group"><label>أنثى (أكبر من 12 سنة)</label><input type="number" id="C8" value="0"></div>
+                <div class="input-group"><label>ذكر (أقل من 12 سنة)</label><input type="number" id="D8" value="0"></div>
+                <div class="input-group"><label>ذكر (أكبر من 12 سنة)</label><input type="number" id="E8" value="0"></div>
             </div>
-
             <div class="category">
                 <h2>براز (Stool)</h2>
-                <div class="input-group">
-                    <label>أنثى (أقل من 12 سنة)</label>
-                    <input type="number" id="F8" value="0">
-                </div>
-                <div class="input-group">
-                    <label>أنثى (أكبر من 12 سنة)</label>
-                    <input type="number" id="G8" value="0">
-                </div>
-                <div class="input-group">
-                    <label>ذكر (أقل من 12 سنة)</label>
-                    <input type="number" id="H8" value="0">
-                </div>
-                <div class="input-group">
-                    <label>ذكر (أكبر من 12 سنة)</label>
-                    <input type="number" id="I8" value="0">
-                </div>
+                <div class="input-group"><label>أنثى (أقل من 12 سنة)</label><input type="number" id="F8" value="0"></div>
+                <div class="input-group"><label>أنثى (أكبر من 12 سنة)</label><input type="number" id="G8" value="0"></div>
+                <div class="input-group"><label>ذكر (أقل من 12 سنة)</label><input type="number" id="H8" value="0"></div>
+                <div class="input-group"><label>ذكر (أكبر من 12 سنة)</label><input type="number" id="I8" value="0"></div>
             </div>
         </div>
         <button onclick="prepareAndPrint()">تجهيز التقرير للطباعة (PDF)</button>
     </div>
 
     <div id="print-area">
-        <h2 class="report-title"></h2> <table class="report-table">
+        <h2 class="report-title"></h2>
+        <table class="report-table">
             <thead>
                 <tr>
                     <th rowspan="4">الوحدة</th>
@@ -72,20 +48,12 @@
                     <th colspan="8">إيجابي بلهارسيا (مصري)</th>
                 </tr>
                 <tr>
-                    <th colspan="4">عدد المفحوص بول</th>
-                    <th colspan="4">عدد المفحوص براز</th>
-                    <th colspan="4">بلهارسيا بولية</th>
-                    <th colspan="4">بلهارسيا معوية</th>
+                    <th colspan="4">عدد المفحوص بول</th><th colspan="4">عدد المفحوص براز</th>
+                    <th colspan="4">بلهارسيا بولية</th><th colspan="4">بلهارسيا معوية</th>
                 </tr>
                 <tr>
-                    <th colspan="2">انثى</th>
-                    <th colspan="2">ذكر</th>
-                    <th colspan="2">انثى</th>
-                    <th colspan="2">ذكر</th>
-                    <th colspan="2">انثى</th>
-                    <th colspan="2">ذكر</th>
-                    <th colspan="2">انثى</th>
-                    <th colspan="2">ذكر</th>
+                    <th colspan="2">انثى</th><th colspan="2">ذكر</th><th colspan="2">انثى</th><th colspan="2">ذكر</th>
+                    <th colspan="2">انثى</th><th colspan="2">ذكر</th><th colspan="2">انثى</th><th colspan="2">ذكر</th>
                 </tr>
                 <tr>
                     <th>&lt;=12</th><th>&gt;12</th><th>&lt;=12</th><th>&gt;12</th>
@@ -99,17 +67,16 @@
                     <td>فوكة</td>
                     <td id="report-B8">0</td><td id="report-C8">0</td><td id="report-D8">0</td><td id="report-E8">0</td>
                     <td id="report-F8">0</td><td id="report-G8">0</td><td id="report-H8">0</td><td id="report-I8">0</td>
-                    <td>0</td><td>0</td><td>0</td><td>0</td>
-                    <td>0</td><td>0</td><td>0</td><td>0</td>
+                    <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
                 </tr>
             </tbody>
         </table>
 
         <div class="report-footer">
-            <span>مدير الإدارة الصحية</span>
-            <span>مدير المستشفى</span>
+            <div class="signature">مدير الإدارة الصحية</div>
+            <div class="signature">مدير المستشفى</div>
         </div>
-        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
